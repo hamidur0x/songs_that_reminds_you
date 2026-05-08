@@ -1,139 +1,117 @@
-Here’s a clean and professional `README.md` for your project:
-
-```md
 # 💖 For My Love – Cinematic Songbook
 
-A premium, mobile-first digital songbook web experience that feels like flipping through a real physical book. Each page reveals a memory, paired with music that plays automatically using YouTube integration.
+A premium cinematic digital songbook experience that blends memories, music, and storytelling into a beautiful interactive book.
 
 ---
+```
 
 ## ✨ Features
 
-- 📖 Realistic 3D page-flip book effect  
-- 🎵 Auto-playing songs linked to each page  
-- 📱 Fully responsive (mobile + desktop)  
-- 💫 Cinematic UI with ambient lighting and glassmorphism  
+- 📖 Realistic 3D page-flip book experience  
+- 🎵 YouTube-based auto music per page  
+- 📱 Fully responsive (mobile + desktop optimized)  
+- 💫 Cinematic lighting + glass UI design  
 - 🔊 Page flip sound effects  
-- ⏯️ Play / mute control for music  
-- ⌨️ Keyboard navigation (arrow keys)  
-- 👆 Swipe support for mobile users  
+- 👆 Swipe + keyboard navigation support  
+- 🎧 Smooth background music transitions  
 
 ---
 
 ## 📂 Project Structure
-
 ```
 
-project-folder/
-│
-├── index.html
-├── images/
-│   ├── 1.jpg
-│   ├── 2.jpg
-│   ├── ...
-│   └── 25.jpg
-└── README.md
+```bash
 
-````
+/images
+├── 1.jpg
+├── 2.jpg
+├── ...
+└── 25.jpg
+
+index.html
+README.md
+
+```
 
 ---
 
 ## 🎶 How It Works
 
-- Each page (`images/1.jpg`, `images/2.jpg`, etc.) represents a book page  
-- Specific pages are mapped to songs using YouTube video IDs  
-- When a page flips, the corresponding song automatically plays  
+- Each page is mapped to a specific image (`images/1.jpg`, `images/2.jpg`, etc.)
+- Selected pages trigger specific songs via YouTube video ID
+- Page flip automatically changes music + UI state
 - First page = Cover  
-- Last page = End page  
+- Last page = Ending Page  
 
 ---
 
-## 🚀 How to Run Locally
+## 🚀 Deployment (GitHub Pages)
 
-1. Download or clone the repository:
-   ```bash
-   git clone https://github.com/your-username/songbook.git
+1. Push project to GitHub repository  
+2. Go to **Settings → Pages**  
+3. Select:
+```
+
+Branch: main
+Folder: /root
+
 ````
-
-2. Open the folder:
-
-   ```bash
-   cd songbook
-   ```
-
-3. Open `index.html` in your browser:
-
-   * Double click it
-     **OR**
-   * Use Live Server (VS Code extension)
-
----
-
-## 🌐 Deploy on GitHub Pages (FREE)
-
-1. Go to your GitHub repository
-2. Click **Settings**
-3. Scroll to **Pages**
-4. Under **Source**, select:
-
-   ```
-   Branch: main
-   Folder: /root
-   ```
-5. Click **Save**
-6. Your site will be live at:
-
-   ```
-   https://your-username.github.io/repo-name/
-   ```
+4. Save → Your site goes live instantly
 
 ---
 
 ## 🎧 Customization
 
-### Change Songs
-
-Edit this section in `index.html`:
-
+### Add / Change Songs
+Edit:
 ```js
 const songMappings = {
-    2: { title: "Song Name", videoId: "YOUTUBE_ID", startTime: 30 },
-}
-```
+2: { title: "Song Name", videoId: "VIDEO_ID", startTime: 30 },
+};
+````
 
 ### Change Pages
 
-* Add images in `/images`
-* Update `TOTAL_PAGES`
+* Add images inside `/images`
+* Update `TOTAL_PAGES` value
 
 ---
 
-## 💡 Requirements
+## 🧠 Tech Stack
 
-* Modern browser (Chrome recommended)
-* Internet connection (for YouTube API & songs)
+* HTML5
+* CSS3 (Tailwind + Custom CSS)
+* JavaScript (Vanilla)
+* PageFlip.js
+* YouTube IFrame API
 
 ---
 
-## ❤️ Purpose
+## 🏆 Creator Credit
 
-This project is made as a romantic digital gift experience — combining memories, music, and storytelling into one cinematic book.
+**Designed & Developed with cinematic detail by:**
+
+> ✨ Built with passion, emotion, and attention to detail
+> 💻 Crafted by a developer who turns memories into experiences
+> 🎧 Every animation and interaction designed for emotional storytelling
+
+**Creator Signature:**
+
+```
+Made with ❤️ by Hamidur Rahman
+```
+
+---
+
+## ⚡ HiFi Note
+
+This project is a **high-fidelity interactive experience**, not just a website —
+it is designed to feel like a *living memory book* where music, motion, and emotion blend together.
 
 ---
 
 ## 📜 License
 
-Free to use for personal projects ❤️
+© 2026 – All Rights Reserved
+This project is created as a personal cinematic experience and should not be redistributed as a template without permission.
 
-```
-
----
-
-If you want, I can also:
-- ✨ :contentReference[oaicite:0]{index=0}
-- 🔥 :contentReference[oaicite:1]{index=1}
-- 📦 :contentReference[oaicite:2]{index=2}
-- 💌 :contentReference[oaicite:3]{index=3}
-
-Just tell me.
-```
