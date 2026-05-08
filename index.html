@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Cinematic Songbook</title>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- PageFlip -->
+    <script src="https://cdn.jsdelivr.net/npm/page-flip/dist/js/page-flip.browser.js"></script>
+
+    <style>
+        :root {
+            --accent: #d4af37;
+            --bg: #09090c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at center,
+                    #1d1d2c 0%,
+                    #0c0c11 45%,
+                    #050507 100%);
+            font-family: 'Inter', sans-serif;
+            touch-action: none;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .ambient-light {
+            position: absolute;
+            width: 80vw;
+            height: 80vh;
+            border-radius: 50%;
+            background:
+                radial-gradient(circle,
+                    rgba(212, 175, 55, 0.08) 0%,
+                    transparent 70%);
+            filter: blur(40px);
+            pointer-events: none;
+        }
+
+        @keyframes floatBook {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .floating-container {
+            animation: floatBook 7s ease-in-out infinite;
+            perspective: 2000px;
+            opacity: 0;
+            transition: opacity 1s ease;
+            z-index: 10;
+        }
+
+        .book-wrapper {
+            filter: drop-shadow(0 40px 80px rgba(0, 0, 0, 0.9));
+        }
+
+        .page {
+            overflow: hidden;
+            background: #111;
+        }
+
+        .page.--hard {
+            background: #0b0b0b;
+        }
+
+        .page-content {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .page-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            user-select: none;
+            pointer-events: none;
+        }
+
+        #startup-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background:
+                rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(20px);
+            transition: 1s ease;
+        }
+
+        .font-cinzel {
+            font-family: 'Cinzel', serif;
+        }
+
+        .glass-btn {
+            background:
+                rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border:
+                1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: 0.3s ease;
+        }
+
+        .glass-btn:hover {
+            transform: scale(1.05);
+            border-color: rgba(212, 175, 55, 0.4);
+            background:
+                rgba(212, 175, 55, 0.15);
+        }
+
+        #ui-layer {
+            position: fixed;
+            inset: 0;
+            z-index: 20;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .music-box,
+        .page-box {
+            pointer-events: auto;
+            padding: 12px 18px;
+            border-radius: 999px;
+            background:
+                rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+            border:
+                1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .music-bars {
+            display: flex;
+            align-items: end;
+            gap: 3px;
+            height: 16px;
+        }
+
+        .bar {
+            width: 4px;
+            border-radius: 999px;
+            background: var(--accent);
+            animation: bounce 1s infinite ease-in-out;
+        }
+
+        .bar:nth-child(1) {
+            height: 5px;
+        }
+
+        .bar:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .bar:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                height: 5px;
+            }
+
+            50% {
+                height: 16px;
+            }
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .nav-btn {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            pointer-events: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background:
+                rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border:
+                1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 20px;
+        }
+
+        .bottom-text {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.45);
+            font-size: 11px;
+            letter-spacing: 3px;
+        }
+
+        #yt-player-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 1px;
+            height: 1px;
+            opacity: 0.01;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @media(max-width:768px) {
+            .nav-btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="ambient-light"></div>
+
+    <!-- START SCREEN -->
+
+    <div id="startup-screen">
+
+        <h1 class="font-cinzel text-5xl md:text-7xl text-white tracking-[8px] mb-3">
+            SONGBOOK
+        </h1>
+
+        <p class="text-gray-400 mb-8 tracking-[4px] text-center px-4">
+            CINEMATIC AUDIO EXPERIENCE
+        </p>
+
+        <button id="start-btn"
+            class="glass-btn px-10 py-4 rounded-full text-lg flex items-center gap-3 font-cinzel">
+            <span>OPEN BOOK</span>
+            <i class="fas fa-book-open"></i>
+        </button>
+
+    </div>
+
+    <!-- UI -->
+
+    <div id="ui-layer">
+
+        <div class="top-bar">
+
+            <div id="music-indicator"
+                class="music-box flex items-center gap-3 opacity-0 transition duration-500">
+
+                <div class="music-bars">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+
+                <span id="song-title" class="text-sm">
+                    Playing...
+                </span>
+
+                <button id="toggle-mute">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+
+            </div>
+
+            <div class="page-box font-cinzel">
+                <span id="page-counter">
+                    Cover
+                </span>
+            </div>
+
+        </div>
+
+        <div class="nav-buttons">
+
+            <button id="prev-btn" class="nav-btn">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+
+            <button id="next-btn" class="nav-btn">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+
+        </div>
+
+        <div class="bottom-text">
+            SWIPE TO TURN PAGES
+        </div>
+
+    </div>
+
+    <!-- BOOK -->
+
+    <div class="floating-container" id="main-content">
+
+        <div class="book-wrapper">
+            <div id="book"></div>
+        </div>
+
+    </div>
+
+    <!-- YOUTUBE -->
+
+    <div id="yt-player-container"></div>
+
+    <!-- PAGE FLIP SOUND -->
+
+    <audio id="page-flip-sound"
+        src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_731464c1eb.mp3?filename=page-turn-1-101150.mp3"
+        preload="auto"></audio>
+
+    <script>
+
+        // =========================
+        // CONFIG
+        // =========================
+
+        const TOTAL_PAGES = 30;
+
+        const songMappings = {
+
+            1: { title: "Song 1", videoId: "2JBYnvUlAEc", startTime: 70 },
+            2: { title: "Song 2", videoId: "MdjuGC6FW5U", startTime: 0 },
+            3: { title: "Song 3", videoId: "2JBYnvUlAEc", startTime: 0 },
+            4: { title: "Song 4", videoId: "MdjuGC6FW5U", startTime: 0 },
+            5: { title: "Song 5", videoId: "2JBYnvUlAEc", startTime: 0 },
+
+        };
+
+        // =========================
+        // GLOBALS
+        // =========================
+
+        let pageFlip;
+        let ytPlayer;
+        let isPlayerReady = false;
+        let isMuted = false;
+        let started = false;
+
+        // =========================
+        // ELEMENTS
+        // =========================
+
+        const book = document.getElementById('book');
+
+        const startBtn = document.getElementById('start-btn');
+
+        const startupScreen = document.getElementById('startup-screen');
+
+        const uiLayer = document.getElementById('ui-layer');
+
+        const mainContent = document.getElementById('main-content');
+
+        const pageCounter = document.getElementById('page-counter');
+
+        const prevBtn = document.getElementById('prev-btn');
+
+        const nextBtn = document.getElementById('next-btn');
+
+        const musicIndicator = document.getElementById('music-indicator');
+
+        const songTitle = document.getElementById('song-title');
+
+        const toggleMuteBtn = document.getElementById('toggle-mute');
+
+        const flipSound = document.getElementById('page-flip-sound');
+
+        // =========================
+        // BUILD BOOK
+        // =========================
+
+        function buildBook() {
+
+            for (let i = 1; i <= TOTAL_PAGES; i++) {
+
+                const div = document.createElement('div');
+
+                div.className =
+                    `page ${i === 1 || i === TOTAL_PAGES ? '--hard' : ''}`;
+
+                div.innerHTML = `
+                
+                <div class="page-content">
+
+                    <img
+                        src="images/${i}.png"
+                        class="page-image"
+                        draggable="false"
+                    >
+
+                </div>
+                
+                `;
+
+                book.appendChild(div);
+            }
+        }
+
+        // =========================
+        // PAGEFLIP
+        // =========================
+
+        function initBook() {
+
+            const mobile = window.innerWidth < 768;
+
+            let width;
+            let height;
+
+            if (mobile) {
+
+                width = window.innerWidth * 0.92;
+
+                height = width * 1.45;
+
+                if (height > window.innerHeight * 0.82) {
+
+                    height = window.innerHeight * 0.82;
+
+                    width = height / 1.45;
+                }
+
+            } else {
+
+                height = window.innerHeight * 0.82;
+
+                width = height / 1.45;
+            }
+
+            pageFlip = new St.PageFlip(book, {
+
+                width,
+                height,
+
+                size: "fixed",
+
+                minWidth: 300,
+                maxWidth: 1200,
+
+                minHeight: 400,
+                maxHeight: 1600,
+
+                showCover: true,
+
+                usePortrait: true,
+
+                mobileScrollSupport: false,
+
+                flippingTime: 900,
+
+                drawShadow: true,
+
+                swipeDistance: 20,
+
+            });
+
+            pageFlip.loadFromHTML(document.querySelectorAll('.page'));
+
+            pageFlip.on('flip', (e) => {
+
+                const currentPage = e.data + 1;
+
+                updateUI(currentPage);
+
+                playFlipSound();
+
+                playMusic(currentPage);
+
+            });
+
+        }
+
+        // =========================
+        // UPDATE UI
+        // =========================
+
+        function updateUI(page) {
+
+            if (page === 1) {
+
+                pageCounter.textContent = "Cover";
+
+            } else if (page === TOTAL_PAGES) {
+
+                pageCounter.textContent = "End";
+
+            } else {
+
+                pageCounter.textContent = `Page ${page}`;
+            }
+        }
+
+        // =========================
+        // PAGE SOUND
+        // =========================
+
+        function playFlipSound() {
+
+            if (isMuted) return;
+
+            flipSound.volume = 1;
+
+            flipSound.currentTime = 0;
+
+            flipSound.play().catch(() => { });
+
+        }
+
+        // =========================
+        // YOUTUBE API
+        // =========================
+
+        const tag = document.createElement('script');
+
+        tag.src = "https://www.youtube.com/iframe_api";
+
+        document.body.appendChild(tag);
+
+        window.onYouTubeIframeAPIReady = function () {
+
+            ytPlayer = new YT.Player('yt-player-container', {
+
+                width: '1',
+                height: '1',
+
+                playerVars: {
+
+                    autoplay: 0,
+                    controls: 0,
+                    rel: 0,
+                    modestbranding: 1,
+                    playsinline: 1
+
+                },
+
+                events: {
+
+                    onReady: () => {
+
+                        isPlayerReady = true;
+
+                        console.log("YT READY");
+
+                    }
+
+                }
+
+            });
+
+        };
+
+        // =========================
+        // MUSIC
+        // =========================
+
+        function playMusic(page) {
+
+            if (!isPlayerReady) return;
+
+            const music = songMappings[page];
+
+            if (!music) {
+
+                ytPlayer.stopVideo();
+
+                musicIndicator.classList.add('opacity-0');
+
+                return;
+            }
+
+            songTitle.textContent = music.title;
+
+            musicIndicator.classList.remove('opacity-0');
+
+            ytPlayer.loadVideoById({
+
+                videoId: music.videoId,
+
+                startSeconds: music.startTime || 0
+
+            });
+
+            setTimeout(() => {
+
+                if (!isMuted) {
+
+                    ytPlayer.unMute();
+
+                }
+
+                ytPlayer.setVolume(100);
+
+                ytPlayer.playVideo();
+
+            }, 1000);
+
+        }
+
+        // =========================
+        // START BUTTON
+        // =========================
+
+        startBtn.addEventListener('click', async () => {
+
+            if (started) return;
+
+            started = true;
+
+            // UNLOCK AUDIO
+
+            try {
+
+                flipSound.volume = 0;
+
+                await flipSound.play();
+
+                flipSound.pause();
+
+                flipSound.currentTime = 0;
+
+            } catch (e) {
+
+                console.log(e);
+
+            }
+
+            startupScreen.style.opacity = "0";
+
+            setTimeout(() => {
+
+                startupScreen.style.display = "none";
+
+            }, 1000);
+
+            uiLayer.style.opacity = "1";
+
+            mainContent.style.opacity = "1";
+
+            buildBook();
+
+            setTimeout(() => {
+
+                initBook();
+
+                setTimeout(() => {
+
+                    playMusic(1);
+
+                }, 1500);
+
+            }, 100);
+
+        });
+
+        // =========================
+        // NAVIGATION
+        // =========================
+
+        nextBtn.addEventListener('click', () => {
+
+            if (pageFlip) pageFlip.flipNext();
+
+        });
+
+        prevBtn.addEventListener('click', () => {
+
+            if (pageFlip) pageFlip.flipPrev();
+
+        });
+
+        // =========================
+        // MUTE
+        // =========================
+
+        toggleMuteBtn.addEventListener('click', () => {
+
+            isMuted = !isMuted;
+
+            const icon =
+                toggleMuteBtn.querySelector('i');
+
+            if (isMuted) {
+
+                icon.classList.remove('fa-volume-up');
+
+                icon.classList.add('fa-volume-mute');
+
+                if (ytPlayer) ytPlayer.mute();
+
+            } else {
+
+                icon.classList.remove('fa-volume-mute');
+
+                icon.classList.add('fa-volume-up');
+
+                if (ytPlayer) {
+
+                    ytPlayer.unMute();
+
+                    ytPlayer.setVolume(100);
+
+                }
+
+            }
+
+        });
+
+        // =========================
+        // KEYBOARD
+        // =========================
+
+        document.addEventListener('keydown', (e) => {
+
+            if (!pageFlip) return;
+
+            if (e.key === 'ArrowRight') {
+
+                pageFlip.flipNext();
+
+            }
+
+            if (e.key === 'ArrowLeft') {
+
+                pageFlip.flipPrev();
+
+            }
+
+        });
+
+    </script>
+
+</body>
+
+</html>
