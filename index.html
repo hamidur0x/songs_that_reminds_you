@@ -3,8 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
     <title>FOR MY LOVE</title>
 
@@ -17,8 +16,7 @@
         rel="stylesheet">
 
     <!-- Icons -->
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- PageFlip -->
     <script src="https://cdn.jsdelivr.net/npm/page-flip/dist/js/page-flip.browser.js"></script>
@@ -282,17 +280,16 @@
     <div id="startup-screen">
 
         <div class="flex justify-center items-center">
-    <h1 class="font-cinzel text-5xl md:text-7xl text-white tracking-[8px] mb-3 text-center">
-        THE SONGS WHICH REMIND ME OF YOU
-    </h1>
-</div>
+            <h1 class="font-cinzel text-5xl md:text-7xl text-white tracking-[8px] mb-3 text-center">
+                THE SONGS WHICH REMIND ME OF YOU
+            </h1>
+        </div>
 
         <p class="text-gray-400 mb-8 tracking-[4px] text-center px-4">
             AN ONLINE BIRTHDAY GIFT GIFT FOR MY LOVE ❤️
         </p>
 
-        <button id="start-btn"
-            class="glass-btn px-10 py-4 rounded-full text-lg flex items-center gap-3 font-cinzel">
+        <button id="start-btn" class="glass-btn px-10 py-4 rounded-full text-lg flex items-center gap-3 font-cinzel">
             <span>OPEN BOOK</span>
             <i class="fas fa-book-open"></i>
         </button>
@@ -305,8 +302,7 @@
 
         <div class="top-bar">
 
-            <div id="music-indicator"
-                class="music-box flex items-center gap-3 opacity-0 transition duration-500">
+            <div id="music-indicator" class="music-box flex items-center gap-3 opacity-0 transition duration-500">
 
                 <div class="music-bars">
                     <div class="bar"></div>
@@ -379,8 +375,8 @@
         const TOTAL_PAGES = 25;
 
         const songMappings = {
+            1: null,
 
-            1: { title: "", videoId: "", startTime: 0 },
             2: { title: "Tum Se Hi", videoId: "mt9xg0mmt28", startTime: 30 },
             3: { title: "Raataan Lambiyan", videoId: "gvyUuxdRdR4", startTime: 12 },
             4: { title: "Kesariya", videoId: "BddP6PYo2gs", startTime: 50 },
@@ -389,23 +385,26 @@
             7: { title: "Tum Hi Ho", videoId: "IJq0yyWug1k", startTime: 63 },
             8: { title: "Kaise Hua", videoId: "WWXm39leYew", startTime: 63 },
             9: { title: "Ve Maahi", videoId: "j6muwUGdvXw", startTime: 81 },
-            10: { title: "Tu Tu Hai Wahi ", videoId: "H7aOCLPhuZo", startTime: 81 },
+            10: { title: "Tu Tu Hai Wahi", videoId: "H7aOCLPhuZo", startTime: 81 },
+
             11: { title: "Agar Tum Saath Ho", videoId: "sK7riqg2mr4", startTime: 141.6 },
-            12: { title: "Humko Humise Chura Lo ", videoId: "zWPsjhBaRb0", startTime: 70 },
-            13: { title: "Dil Diyan Gallan ", videoId: "SAcpESN_Fk4", startTime: 40 },
+            12: { title: "Humko Humise Chura Lo", videoId: "zWPsjhBaRb0", startTime: 70 },
+            13: { title: "Dil Diyan Gallan", videoId: "SAcpESN_Fk4", startTime: 40 },
             14: { title: "Aankhon Mein Base Ho Tum", videoId: "h6xpqJT74BU", startTime: 50 },
             15: { title: "Chand Sifarish", videoId: "zWEOx7TSM6I", startTime: 78 },
+
             16: { title: "Gehra Hua", videoId: "0KYJPoGJcMc", startTime: 21 },
-            17: { title: "Rimjhim E Dhara Te ", videoId: "244sTF7Iw", startTime: 104 },
+            17: { title: "Rimjhim E Dhara Te", videoId: "244sTF7Iw", startTime: 104 },
             18: { title: "Tumi", videoId: "NQp3cbSkqbo", startTime: 61 },
             19: { title: "Tumi Jake Bhalobasho", videoId: "LkUqqoKB4rM", startTime: 230 },
             20: { title: "Tomake Chai", videoId: "JAP_Acr8jUM", startTime: 80 },
-            21: { title: "Purnota", videoId: "KmDLj7i06KY", startTime: 88.5 },
-            22: { title: "Rupkothar Jogote ", videoId: "T8qMKs9Fjtg", startTime: 53 },
-            23: { title: "Dekhechhi Rupshagore ", videoId: "ReBHEyAd2zk", startTime: 71 },
-            24: { title: "Beqarar Yeh Dil", videoId: "TvFJBf3U", startTime: 116 },
-            25: { title: "", videoId: "", startTime: 0 },
 
+            21: { title: "Purnota", videoId: "KmDLj7i06KY", startTime: 88.5 },
+            22: { title: "Rupkothar Jogote", videoId: "T8qMKs9Fjtg", startTime: 53 },
+            23: { title: "Dekhechhi Rupshagore", videoId: "ReBHEyAd2zk", startTime: 71 },
+            24: { title: "Beqarar Yeh Dil", videoId: "TvFJBf3U", startTime: 116 },
+
+            25: null
         };
 
         // =========================
